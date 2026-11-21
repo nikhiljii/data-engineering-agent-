@@ -1,4 +1,4 @@
-# pipeline-guardian
+# Data Engineering Agent
 
 A Claude Code agent team for end-to-end data engineering: from a pipeline request to a safely
 deployed, monitored, self-checked pipeline, with humans approving only what touches production.

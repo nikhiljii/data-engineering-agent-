@@ -1,4 +1,4 @@
-# pipeline-guardian: end-to-end data engineering with a team of agents
+# data-engineering-agent: end-to-end data engineering with a team of agents
 
 Goal: take a data-pipeline request from idea to a safely deployed, monitored, self-checked
 pipeline, with humans approving only what touches production.
