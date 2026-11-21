@@ -1,0 +1,28 @@
+# Source columns, classification and masking (governance; ADR-004). Pruned columns are never landed in DuckDB (R2).
+sources:
+  customers:
+    file: customers.csv
+    columns:
+      customer_id:   {classification: internal, note: pseudonymous key}
+      customer_name: {classification: PII, masking: pruned_at_landing}
+      email:         {classification: PII, masking: pruned_at_landing}
+      country:       {classification: internal}
+      created_at:    {classification: internal}
+  orders:
+    file: orders.csv
+    columns:
+      order_id: {classification: internal}
+      customer_id: {classification: internal}
+      order_date: {classification: internal}
+      product_id: {classification: internal}
+      quantity: {classification: internal}
+      unit_price: {classification: confidential}
+      order_status: {classification: internal}
+  payments:
+    file: payments.csv
+    columns:
+      payment_id: {classification: internal}
+      order_id: {classification: internal}
+      payment_date: {classification: internal}
+      payment_amount: {classification: confidential}
+      payment_status: {classification: internal}

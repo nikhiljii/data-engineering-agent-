@@ -1,24 +1,25 @@
-# Preset: land raw data in an elastic cloud warehouse, transform there with SQL.
-project: my-project   # <- set per project; architect fills the rest
-paradigm: auto            # auto | ELT | ETL | ETLT (explicit value = human override)
-processing: batch         # batch | micro-batch | streaming
+# DRAFT by requirements-analyst, adapted from profiles/elt-cloud-warehouse.yaml (architect finalises).
+project: ecommerce-daily-orders
+paradigm: auto            # auto | ELT | ETL | ETLT (architect decides in ADR-001)
+processing: batch         # daily batch, stated by the human
 target:
-  type: cloud_warehouse   # cloud_warehouse | lakehouse | onprem_db | file_store
-  engine: snowflake
-  elastic_compute: true
+  type: embedded_warehouse   # local DuckDB, no cloud
+  engine: duckdb
+  elastic_compute: false
 sources:
-  - {name: orders_db, kind: db}
-  - {name: payments_api, kind: api}
+  - {name: customers_csv, kind: file}
+  - {name: orders_csv, kind: file}
+  - {name: payments_csv, kind: file}
 sensitivity:
-  pii: false
-  mask_before_landing: false
+  pii: true               # customer_name, email in customers.csv
+  mask_before_landing: false   # no such requirement given; see requirements.md PII section
 transforms:
-  style: sql              # sql | code | mixed
+  style: sql              # DuckDB SQL; placeholder until the architect decides
 team:
-  sql_strength: high      # high | medium | low
+  sql_strength: medium    # placeholder, not given by the human (open question 6)
 requirements:
-  keep_raw: true
-  schema_change_frequency: high   # high | low
+  keep_raw: true          # defects must stay reproducible
+  schema_change_frequency: low   # static scenario CSVs
   storage_constrained: false
 slas:
-  freshness_hours: 24
+  freshness_hours: 24     # placeholder derived from "daily" (open question 1)

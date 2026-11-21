@@ -1,2 +1,11 @@
-# Machine-readable foreign keys declared by the architect; rule R8 checks each has a relationships test.
-foreign_keys: []
+# Machine-readable foreign keys declared by the architect; rule R7 checks each has a relationships test.
+# Project: ecommerce-daily-orders. Models are in scenario/ecommerce/sql/ (schema.model).
+# `severity: warn` marks a relationship that is known to be violated in the data on purpose
+# (see ADR-003): violations are quarantined or flagged, they do not fail the build.
+foreign_keys:
+  - {model: stg_orders, column: customer_id, to: stg_customers, field: customer_id, nullable: true, severity: warn,
+     note: "60 orders have NULL customer_id (D2, UNKNOWN country); non-null values all exist today"}
+  - {model: stg_payments, column: order_id, to: stg_orders, field: order_id, nullable: false, severity: warn,
+     note: "30 orphan payments (D6) are quarantined, not an error"}
+  - {model: daily_country_report_dq, column: report_date, to: daily_country_report, field: report_date, nullable: false,
+     note: "composite key (report_date, country); a dq row exists for every report row and vice versa"}

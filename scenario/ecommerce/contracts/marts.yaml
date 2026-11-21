@@ -1,0 +1,54 @@
+# Output contract and classification of every mart column (R21). Classification: public | internal | confidential | PII.
+# No mart column is PII; pii_columns is therefore empty and no masking rule is required.
+# Source of truth for types and rules: architecture/data-architecture.md "Marts".
+pii_columns: []
+tables:
+  marts.daily_country_report:
+    key: [report_date, country]
+    columns:
+      report_date:         {type: DATE,          classification: internal}
+      country:             {type: VARCHAR,       classification: internal}
+      total_orders:        {type: INTEGER,       classification: internal}
+      completed_orders:    {type: INTEGER,       classification: internal}
+      gross_revenue:       {type: "DECIMAL(18,2)", classification: confidential}   # financial
+      successful_payments: {type: INTEGER,       classification: internal}
+      failed_payments:     {type: INTEGER,       classification: internal}
+      data_quality_status: {type: VARCHAR,       classification: internal}
+  marts.daily_country_report_dq:
+    key: [report_date, country]
+    columns:
+      report_date:                   {type: DATE,    classification: internal}
+      country:                       {type: VARCHAR, classification: internal}
+      duplicates_collapsed:          {type: INTEGER, classification: internal}
+      unknown_country_orders:        {type: INTEGER, classification: internal}
+      excluded_orders:               {type: INTEGER, classification: internal}
+      amount_mismatch_orders:        {type: INTEGER, classification: internal}
+      completed_without_payment:     {type: INTEGER, classification: internal}
+      no_payment_orders:             {type: INTEGER, classification: internal}
+      payments_excluded:             {type: INTEGER, classification: internal}
+      status_payment_contradictions: {type: INTEGER, classification: internal}
+  marts.run_summary:
+    key: [run_id]
+    columns:
+      run_id:                               {type: VARCHAR,   classification: internal}
+      report_dates:                         {type: "VARCHAR[]", classification: internal}
+      raw_rows_customers:                   {type: INTEGER,   classification: internal}
+      raw_rows_orders:                      {type: INTEGER,   classification: internal}
+      raw_rows_payments:                    {type: INTEGER,   classification: internal}
+      q_orders_duplicate_order_surplus:     {type: INTEGER,   classification: internal}
+      q_orders_invalid_order_date:          {type: INTEGER,   classification: internal}
+      q_orders_negative_quantity:           {type: INTEGER,   classification: internal}
+      q_orders_invalid_quantity:            {type: INTEGER,   classification: internal}
+      q_payments_orphan_payment:            {type: INTEGER,   classification: internal}
+      q_payments_order_excluded:            {type: INTEGER,   classification: internal}
+      distinct_order_ids:                   {type: INTEGER,   classification: internal}
+      distinct_excluded_orders:             {type: INTEGER,   classification: internal}
+      excluded_share:                       {type: DOUBLE,    classification: internal}
+      orphan_payment_count:                 {type: INTEGER,   classification: internal}
+      fk_violations_stg_orders_customer_id: {type: INTEGER,   classification: internal}
+      fk_violations_stg_payments_order_id:  {type: INTEGER,   classification: internal}
+      rows_ok:                              {type: INTEGER,   classification: internal}
+      rows_warn:                            {type: INTEGER,   classification: internal}
+      rows_fail:                            {type: INTEGER,   classification: internal}
+      run_status:                           {type: VARCHAR,   classification: internal}
+      stop_reason:                          {type: VARCHAR,   classification: internal}
