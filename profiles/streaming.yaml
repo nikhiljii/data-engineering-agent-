@@ -1,0 +1,23 @@
+# Preset: event streams into a lakehouse/warehouse. Needs an elastic engine and keeps raw events.
+project: example-streaming
+paradigm: auto
+processing: streaming
+target:
+  type: lakehouse
+  engine: databricks
+  elastic_compute: true
+sources:
+  - {name: events, kind: stream}
+sensitivity:
+  pii: false
+  mask_before_landing: false
+transforms:
+  style: mixed
+team:
+  sql_strength: medium
+requirements:
+  keep_raw: true
+  schema_change_frequency: high
+  storage_constrained: false
+slas:
+  freshness_hours: 1

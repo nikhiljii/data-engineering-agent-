@@ -14,16 +14,26 @@ pipeline, with humans approving only what touches production.
 | `deployment` | stage -> smoke -> promote -> rollback via `src/deploy.py` | Promotes without a named human approver |
 | `incident` | Detect and diagnose broken runs via `src/incident_cli.py`, propose a fix | Touches production, applies fixes |
 | `evaluator` | Independent scoring: tests, `src/evals.py`, scenarios; can veto a release | Edits pipeline code or the scenarios it scores against |
+| `requirements-analyst` | Goal to requirements, source inventory, draft profile | Designs the architecture |
+| `ingestion-engineer` | Connectors, CDC, API and file intake, raw landing | Deploys, transforms business logic |
+| `data-modeler` | Physical models, transformations, history | Loosens tests or the baseline |
+| `governance` | PII classification, masking, access, lineage | Decides legal basis |
+| `observability` | Freshness, volume, SLA monitors, alerts | Fixes incidents |
+| `platform-engineer` | IaC, warehouse and scheduler provisioning | Applies to production |
+| `cost-optimizer` | Performance and spend proposals | Applies changes |
+| `improvement` | Proposes team changes from scorecard history | Edits evals or scores itself |
+| `migration` | Legacy to new with parity checks | Cuts over without a named approver |
+| `documentation` | Data dictionary, runbooks, lineage docs | Edits anything outside `docs/` |
 
 The evaluator is independent on purpose: no agent grades its own work.
 
 ## Skills (see .claude/skills/)
 
-`enterprise-architecture`, `data-architecture`, `pattern-elt`, `pattern-etl`, `data-contracts`, `pipeline-conventions`, `deploy-runbook`. Agents load a skill when the task matches it.
+`enterprise-architecture`, `data-architecture`, `pattern-elt`, `pattern-etl`, `data-modeling`, `data-contracts`, `pipeline-conventions`, `deploy-runbook`, `governance-pii`, `observability-slo`, `finops`. Agents load a skill when the task matches it.
 
 ## Workflow for any request
 
-0. Phase 0 gate: `architect` produces project-profile.yaml, ADR-001 (paradigm), system then data
+0. Phase 0 gate: `requirements-analyst` writes architecture/requirements.md and a draft profile, then `architect` produces project-profile.yaml, ADR-001 (paradigm), system then data
    architecture. A human approves the pack before any builder runs. All agents conform to it.
 
 1. Orchestrator reads this file and PLAN.md, writes/updates the plan (small, testable steps).
