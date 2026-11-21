@@ -1,0 +1,6 @@
+duckdb
+pyyaml
+pytest
+# optional, for dbt projects:
+# dbt-core
+# dbt-duckdb

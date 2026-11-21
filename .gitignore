@@ -1,0 +1,11 @@
+__pycache__/
+.pytest_cache/
+*.duckdb
+*.duckdb.wal
+releases/
+.incident/
+target/
+logs/
+venv/
+.venv/
+.DS_Store

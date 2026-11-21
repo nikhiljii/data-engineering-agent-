@@ -1,0 +1,2 @@
+# Machine-readable foreign keys declared by the architect; rule R8 checks each has a relationships test.
+foreign_keys: []

@@ -1,0 +1,4 @@
+{
+  "note": "Accepted known violations for an adopted project, each with a reason. The gate fails only on NEW violations. Empty for a greenfield project.",
+  "accepted_failures": {}
+}
