@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pytest:*)",
+      "Bash(python -m src.evals:*)",
+      "Bash(python -m src.paradigm:*)",
+      "Bash(python -m src.conformance:*)",
+      "Bash(python -m src.deploy stage:*)",
+      "Bash(python -m src.incident_cli:*)",
+      "Bash(dbt build:*)",
+      "Bash(dbt test:*)",
+      "Bash(dbt parse:*)"
+    ],
+    "ask": [
+      "Bash(python -m src.deploy promote:*)",
+      "Bash(python -m src.deploy rollback:*)",
+      "Bash(git push:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Bash(rm -rf:*)"
+    ]
+  }
+}

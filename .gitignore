@@ -9,3 +9,8 @@ logs/
 venv/
 .venv/
 .DS_Store
+
+# secrets
+.env
+.env.*
+!.env.example
